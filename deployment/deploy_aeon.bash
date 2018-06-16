@@ -24,7 +24,7 @@ sudo mv libg* /usr/lib/
 cd ~
 sudo systemctl enable ntp
 cd /usr/local/src
-sudo git clone -b aeon-rebase-new https://github.com/durinsmine/durinscoin.git durins
+sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
 cd durins
 sudo make -j$(nproc)
 sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
