@@ -26,7 +26,7 @@ cd ~
 #cd /usr/local/src
 #sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
 cd durins
-sudo make -j$(nproc) release
+sudo make release 
 sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
 sudo useradd -m durinsdaemon -d /home/durinsdaemon
 sudo systemctl daemon-reload
