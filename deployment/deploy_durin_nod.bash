@@ -20,7 +20,7 @@ cd ~
 #cd /usr/src/gtest
 #sudo cmake .
 #sudo make
-#sudo mv libg* /usr/lib/
+##sudo mv libg* /usr/lib/
 cd ~
 sudo systemctl enable ntp
 cd /usr/local/src
