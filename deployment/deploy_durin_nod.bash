@@ -21,9 +21,9 @@ cd ~
 #sudo cmake .
 #sudo make
 #sudo mv libg* /usr/lib/
-#cd ~
-#sudo systemctl enable ntp
-#cd /usr/local/src
+cd ~
+sudo systemctl enable ntp
+cd /usr/local/src
 sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
 cd durins
 sudo make release 
