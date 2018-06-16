@@ -1,10 +1,10 @@
 {
     "aeon": {
-    "funcFile": "./lib/coins/aeon.js",
-    "paymentFile": "./payment_systems/aeon.js",
+    "funcFile": "./lib/coins/durins.js",
+    "paymentFile": "./payment_systems/durins.js",
     "sigDigits": 1000000000000,
-    "name": "Aeon Coin",
+    "name": "Durins Coin",
     "mixIn": 4,
-    "shortCode": "AEON"
+    "shortCode": "DURINS"
   }
 }
