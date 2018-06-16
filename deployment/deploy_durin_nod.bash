@@ -14,24 +14,24 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y upgrade
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password $ROOT_SQL_PASS"
 sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password $ROOT_SQL_PASS"
 echo -e "[client]\nuser=root\npassword=$ROOT_SQL_PASS" | sudo tee /root/.my.cnf
-#sudo DEBIAN_FRONTEND=noninteractive apt-get -y install git python-virtualenv python3-virtualenv curl ntp build-essential screen cmake pkg-config libboost-all-dev libevent-dev libunbound-dev libminiupnpc-dev libunwind8-dev liblzma-dev libldns-dev libexpat1-dev libgtest-dev mysql-server lmdb-utils libzmq3-dev doxygen graphviz libsodium-dev
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install git python-virtualenv python3-virtualenv curl ntp build-essential screen cmake pkg-config libboost-all-dev libevent-dev libunbound-dev libminiupnpc-dev libunwind8-dev liblzma-dev libldns-dev libexpat1-dev libgtest-dev mysql-server lmdb-utils libzmq3-dev doxygen graphviz libsodium-dev
 cd ~
-#git clone https://github.com/DurinsMine/durins-nodejs-pool.git  # Change this depending on how the deployment goes.
-#cd /usr/src/gtest
-#sudo cmake .
-#sudo make
-##sudo mv libg* /usr/lib/
+git clone https://github.com/DurinsMine/durins-nodejs-pool.git  # Change this depending on how the deployment goes.
+cd /usr/src/gtest
+sudo cmake .
+sudo make
+sudo mv libg* /usr/lib/
 cd ~
-sudo systemctl enable ntp
-cd /usr/local/src
-sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
-cd durins
-sudo make release 
-sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
-sudo useradd -m durinsdaemon -d /home/durinsdaemon
-sudo systemctl daemon-reload
-sudo systemctl enable durins
-sudo systemctl start durins
+#sudo systemctl enable ntp
+#cd /usr/local/src
+#sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
+#cd durins
+#sudo make release 
+#sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
+#sudo useradd -m durinsdaemon -d /home/durinsdaemon
+#sudo systemctl daemon-reload
+#sudo systemctl enable durins
+#sudo systemctl start durins
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install v8.9.3
