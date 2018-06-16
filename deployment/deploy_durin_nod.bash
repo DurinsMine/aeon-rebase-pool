@@ -24,9 +24,8 @@ sudo mv libg* /usr/lib/
 cd ~
 #sudo systemctl enable ntp
 #cd /usr/local/src
-#sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
-#cd durins
-#sudo make release 
+#sudo git clone https://github.com/durinsmine/durinscoin.git durins
+#cd durins && git submodule init && git submodule update
 #sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
 #sudo useradd -m durinsdaemon -d /home/durinsdaemon
 #sudo systemctl daemon-reload
