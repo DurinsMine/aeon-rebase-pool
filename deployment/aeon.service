@@ -1,13 +1,13 @@
 [Unit]
-Description=Aeon Daemon
+Description=Durins Daemon
 After=network.target
 
 [Service]
 Type=forking
 GuessMainPID=no
-ExecStart=/usr/local/src/aeon/build/release/bin/aeon --rpc-bind-ip 127.0.0.1 --detach --restricted-rpc
+ExecStart=/usr/local/src/durins/build/release/bin/durins --rpc-bind-ip 127.0.0.1 --detach --restricted-rpc
 Restart=always
-User=aeondaemon
+User=durinsdaemon
 
 [Install]
 WantedBy=multi-user.target
