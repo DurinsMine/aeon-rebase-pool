@@ -22,15 +22,6 @@ sudo cmake .
 sudo make
 sudo mv libg* /usr/lib/
 cd ~
-#sudo systemctl enable ntp
-#cd /usr/local/src
-#sudo git clone https://github.com/durinsmine/durinscoin.git durins
-#cd durins && git submodule init && git submodule update
-#sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
-#sudo useradd -m durinsdaemon -d /home/durinsdaemon
-#sudo systemctl daemon-reload
-#sudo systemctl enable durins
-#sudo systemctl start durins
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install v8.9.3
@@ -41,7 +32,6 @@ openssl req -subj "/C=IT/ST=Pool/L=Daemon/O=Mining Pool/CN=mining.pool" -newkey 
 mkdir ~/pool_db/
 sed -r "s/(\"db_storage_path\": ).*/\1\"\/home\/$CURUSER\/pool_db\/\",/" config_example.json > config.json
 cd ~
-#git clone https://github.com/durinsmine/poolui.git
 git clone https://github.com/mesh0000/poolui.git
 cd poolui
 npm install
