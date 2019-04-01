@@ -16,7 +16,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 echo -e "[client]\nuser=root\npassword=$ROOT_SQL_PASS" | sudo tee /root/.my.cnf
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install git python-virtualenv python3-virtualenv curl ntp build-essential screen cmake pkg-config libboost-all-dev libevent-dev libunbound-dev libminiupnpc-dev libunwind8-dev liblzma-dev libldns-dev libexpat1-dev libgtest-dev mysql-server lmdb-utils libzmq3-dev doxygen graphviz libsodium-dev
 cd ~
-git clone https://github.com/DurinsMine/durins-nodejs-pool.git  # Change this depending on how the deployment goes.
+git clone https://github.com/DurinsMine/durins-nodejs-pool.git nodejs-pool  # Change this depending on how the deployment goes.
 cd /usr/src/gtest
 sudo cmake .
 sudo make
@@ -24,18 +24,10 @@ sudo mv libg* /usr/lib/
 cd ~
 sudo systemctl enable ntp
 cd /usr/local/src
-sudo git clone --recursive https://github.com/durinsmine/durinscoin.git durins
-cd durins
-sudo make release
-sudo cp ~/durins-nodejs-pool/deployment/durins.service /lib/systemd/system/
-sudo useradd -m durinsdaemon -d /home/durinsdaemon
-sudo systemctl daemon-reload
-sudo systemctl enable durins
-sudo systemctl start durins
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
 source ~/.nvm/nvm.sh
 nvm install v8.9.3
-cd ~/durins-nodejs-pool
+cd ~/nodejs-pool
 npm install
 npm install -g pm2
 openssl req -subj "/C=IT/ST=Pool/L=Daemon/O=Mining Pool/CN=mining.pool" -newkey rsa:2048 -nodes -keyout cert.key -x509 -out cert.pem -days 36500
@@ -51,7 +43,7 @@ cd build
 sudo ln -s `pwd` /var/www
 CADDY_DOWNLOAD_DIR=$(mktemp -d)
 cd $CADDY_DOWNLOAD_DIR
-curl -sL "https://snipanet.com/caddy.tar.gz" | tar -xz caddy init/linux-systemd/caddy.service
+curl -sL "https://github.com/mholt/caddy/releases/download/v0.11.4/caddy_v0.11.4_linux_amd64.tar.gz" | tar -xz caddy init/linux-systemd/caddy.service
 sudo mv caddy /usr/local/bin
 sudo chown root:root /usr/local/bin/caddy
 sudo chmod 755 /usr/local/bin/caddy
@@ -63,7 +55,7 @@ sudo chown -R root:www-data /etc/caddy
 sudo mkdir /etc/ssl/caddy
 sudo chown -R www-data:root /etc/ssl/caddy
 sudo chmod 0770 /etc/ssl/caddy
-sudo cp ~/durins-nodejs-pool/deployment/caddyfile /etc/caddy/Caddyfile
+sudo cp ~/nodejs-pool/deployment/caddyfile /etc/caddy/Caddyfile
 sudo chown www-data:www-data /etc/caddy/Caddyfile
 sudo chmod 444 /etc/caddy/Caddyfile
 sudo sh -c "sed 's/ProtectHome=true/ProtectHome=false/' init/linux-systemd/caddy.service > /etc/systemd/system/caddy.service"
@@ -75,7 +67,7 @@ sudo systemctl start caddy.service
 rm -rf $CADDY_DOWNLOAD_DIR
 cd ~
 sudo env PATH=$PATH:`pwd`/.nvm/versions/node/v8.9.3/bin `pwd`/.nvm/versions/node/v8.9.3/lib/node_modules/pm2/bin/pm2 startup systemd -u $CURUSER --hp `pwd`
-cd ~/durins-nodejs-pool
+cd ~/nodejs-pool
 sudo chown -R $CURUSER. ~/.pm2
 echo "Installing pm2-logrotate in the background!"
 pm2 install pm2-logrotate &
@@ -83,7 +75,7 @@ mysql -u root --password=$ROOT_SQL_PASS < deployment/basedurins.sql
 mysql -u root --password=$ROOT_SQL_PASS pool -e "INSERT INTO pool.config (module, item, item_value, item_type, Item_desc) VALUES ('api', 'authKey', '`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`', 'string', 'Auth key sent with all Websocket frames for validation.')"
 mysql -u root --password=$ROOT_SQL_PASS pool -e "INSERT INTO pool.config (module, item, item_value, item_type, Item_desc) VALUES ('api', 'secKey', '`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`', 'string', 'HMAC key for Passwords.  JWT Secret Key.  Changing this will invalidate all current logins.')"
 pm2 start init.js --name=api --log-date-format="YYYY-MM-DD HH:mm Z" -- --module=api
-bash ~/durins-nodejs-pool/deployment/install_lmdb_tools.sh
-cd ~/durins-nodejs-pool/sql_sync/
+bash ~/nodejs-pool/deployment/install_lmdb_tools.sh
+cd ~/nodejs-pool/sql_sync/
 env PATH=$PATH:`pwd`/.nvm/versions/node/v8.9.3/bin node sql_sync.js
 echo "You're setup!  Please read the rest of the readme for the remainder of your setup and configuration.  These steps include: Setting your Fee Address, Pool Address, Global Domain, and the Mailgun setup!"
