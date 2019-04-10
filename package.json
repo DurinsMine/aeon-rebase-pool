@@ -42,9 +42,8 @@
     "zmq": "^2.15.3"
   },
   "optionalDependencies": {
-    "cryptonote-util": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
-    "multi-hashing": "git+https://github.com/ArqTras/node-multi-hashing-aesni.git",
-    "cryptoforknote-util": "git+https://github.com/MoneroOcean/node-cryptoforknote-util.git",
-    "cryptonight-hashing": "git+https://github.com/MoneroOcean/node-cryptonight-hashing.git"
+    "cryptonote-util": "git://github.com/stoffu/node-cryptonote-util.git#xmr-Nan-2.0",
+    "multi-hashing": "git://github.com/camthegeek/node-multi-hashing-aesni.git#kangaroo12",
+    "cryptonight-hashing": "git://github.com/MoneroOcean/node-cryptonight-hashing.git"
   }
 }
